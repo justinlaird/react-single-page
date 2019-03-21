@@ -22,7 +22,7 @@ Resources:
       Handler: index.handler
       Runtime: nodejs8.10
       MemorySize: 3008
-      Timeout: 30
+      Timeout: 300
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
@@ -41,6 +41,11 @@ Resources:
           XD_CONFIG_HOME: /tmp/.config
     Metadata:
       StackeryName: deployFrontEnd
+  deployFrontEndDeployTrigger:
+    Type: Custom::FunctionDeployTrigger
+    Properties:
+      ServiceToken: !GetAtt deployFrontEnd.Arn
+      DeploymentTimestamp: !Ref DeploymentTimestamp
 Parameters:
   StackTagName:
     Type: String
@@ -48,3 +53,6 @@ Parameters:
   EnvironmentTagName:
     Type: String
     Description: Environment Name (injected by Stackery at deployment time)
+  DeploymentTimestamp:
+    Type: Number
+    Description: Deployment preparation timestamp in milliseconds Since Epoch (injected by Stackery at deployment time)
