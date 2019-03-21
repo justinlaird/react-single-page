@@ -16,6 +16,25 @@ Resources:
       Tracing: Active
       Policies:
         - AWSXrayWriteOnlyAccess
+        - S3CrudPolicy:
+            BucketName: !Ref ObjectStore
+        - Statement:
+            - Effect: Allow
+              Action:
+                - s3:PutObjectAcl
+              Resource:
+                - !Sub ${ObjectStore.Arn}/*
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref ObjectStore
+          BUCKET_ARN: !GetAtt ObjectStore.Arn
+          XD_CONFIG_HOME: /tmp/.config
+  ObjectStore:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-objectstore
+    Metadata:
+      StackeryName: React App Host
 Parameters:
   StackTagName:
     Type: String
