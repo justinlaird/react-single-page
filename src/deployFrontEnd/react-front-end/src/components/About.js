@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import '../App.css';
-import stackeryLogo from '../images/stackery-logo.png';
-import reactLogo from '../images/react-logo.png';
+import stackeryLogo from '../images/stackery-logo.svg';
+import reactLogo from '../images/react-logo.svg';
 
 class About extends Component {
   render() {
